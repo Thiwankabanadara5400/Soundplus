@@ -1,0 +1,51 @@
+.products-page {
+  padding: 2rem 0;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.page-header h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.category-filter {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 3rem;
+}
+
+.category-btn {
+  padding: 0.75rem 1.5rem;
+  background: var(--medium-gray);
+  border: 2px solid transparent;
+  border-radius: 50px;
+  color: var(--white);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  text-transform: capitalize;
+}
+
+.category-btn:hover {
+  border-color: var(--tech-blue);
+  color: var(--tech-blue);
+}
+
+.category-btn.active {
+  background: var(--gradient-primary);
+  color: var(--black);
+  border-color: var(--primary-yellow);
+}
+
+.no-products {
+  text-align: center;
+  padding: 5rem 0;
+  color: var(--light-gray);
+  font-size: 1.25rem;
+}

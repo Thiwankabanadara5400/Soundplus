@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  # Backend Service
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: soundplus-backend
+    restart: unless-stopped
+    ports:
+      - "0.0.0.0:5000:5000"
+    env_file:
+      - ./backend/.env
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./backend:/usr/src/app
+      - /usr/src/app/node_modules
+      - backend-uploads:/usr/src/app/uploads
+    networks:
+      - soundplus-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Frontend Service
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: soundplus-frontend
+    restart: unless-stopped
+    ports:
+      - "0.0.0.0:3000:3000"
+    environment:
+      - VITE_API_URL=http://172.20.215.232:5000
+      - NODE_ENV=development
+    env_file:
+      - ./frontend/.env
+    volumes:
+      - ./frontend:/usr/app
+      - /usr/app/node_modules
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks:
+      - soundplus-network
+    stdin_open: true
+    tty: true
+
+networks:
+  soundplus-network:
+    driver: bridge
+
+volumes:
+  backend-uploads:
+    driver: local
