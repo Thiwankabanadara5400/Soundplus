@@ -30,6 +30,32 @@ pipeline {
             }
         }
 
+        stage('Setup Environment') {
+            steps {
+                echo '=== Setting up Environment Files ==='
+                sh '''
+                    echo "Creating backend .env file..."
+                    cat > backend/.env << 'BACKEND_ENV'
+NODE_ENV=production
+PORT=5000
+MONGODB_URI=mongodb+srv://your_username:your_password@your_cluster.mongodb.net/soundplus?retryWrites=true&w=majority
+JWT_SECRET=your_jwt_secret_key_here
+BACKEND_URL=http://localhost:5000
+FRONTEND_URL=http://localhost:3000
+BACKEND_ENV
+
+                    echo "Creating frontend .env file..."
+                    cat > frontend/.env << 'FRONTEND_ENV'
+VITE_API_URL=http://localhost:5000
+NODE_ENV=production
+FRONTEND_ENV
+
+                    echo "✓ Environment files created"
+                    ls -la backend/.env frontend/.env
+                '''
+            }
+        }
+
         stage('Build Images') {
             steps {
                 echo '=== Building Docker Images ==='
