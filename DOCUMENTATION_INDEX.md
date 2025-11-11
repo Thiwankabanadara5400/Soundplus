@@ -152,6 +152,7 @@ Jenkins auto-triggers and succeeds in 12-15 minutes.
 - ✅ `COMPLETE_CHANGE_SUMMARY.md` - File changes summary
 - ✅ `DOCKER_FIX_STEPS.md` - Detailed steps
 - ✅ `DOCKER_FIX_SUMMARY.md` - Quick overview
+- ✅ `DOCKER_HUB_CREDENTIALS_SETUP.md` - Configure Jenkins credentials ⭐ NEW
 
 ---
 
