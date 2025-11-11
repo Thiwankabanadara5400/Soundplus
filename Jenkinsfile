@@ -9,6 +9,29 @@ pipeline {
             }
         }
 
+        stage('Pre-flight Check') {
+            steps {
+                echo '=== Pre-flight Docker & Environment Validation ==='
+                echo "Current user: $(whoami)"
+                echo "Current groups: $(id)"
+                echo ""
+                echo "Docker socket info:"
+                sh 'ls -l /var/run/docker.sock || echo "Socket not found"'
+                echo ""
+                echo "Docker version:"
+                sh 'docker --version || echo "Docker not available"'
+                echo ""
+                echo "Docker Compose version:"
+                sh 'docker compose version || echo "Docker Compose not available"'
+                echo ""
+                echo "Test docker daemon access:"
+                sh 'docker ps -q | head -3 || echo "Cannot access Docker daemon - check permissions"'
+                echo ""
+                echo "Workspace contents:"
+                sh 'ls -la | head -20'
+            }
+        }
+
         stage('Setup Environment') {
             steps {
                 echo 'Setting up environment files from .env.example if needed'
